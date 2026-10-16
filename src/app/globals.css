@@ -1,0 +1,365 @@
+@import "tailwindcss";
+
+/* =====================================================================================
+   Une petite surprise pour Saïda — feuille de style globale
+   Direction artistique : rose pastel, crème, lavande, pêche. Doux, lisible, léger.
+   ===================================================================================== */
+
+@theme {
+  /* --- Palette pastel --- */
+  --color-rose-50: #fff7f9;
+  --color-rose-100: #ffeaf1;
+  --color-rose-200: #ffd6e4;
+  --color-rose-300: #ffbcd2;
+  --color-rose-400: #f89cba;
+  --color-rose-500: #eb7fa4;
+  --color-rose-600: #d1618a;
+  --color-rose-700: #a9436a;
+  --color-rose-800: #832f50;
+  --color-rose-900: #5e2039;
+
+  --color-cream-50: #fffdf8;
+  --color-cream-100: #fff8ec;
+  --color-cream-200: #fdeed9;
+  --color-cream-300: #f7e1c4;
+
+  --color-lavender-50: #faf8ff;
+  --color-lavender-100: #f1ebff;
+  --color-lavender-200: #e3daff;
+  --color-lavender-300: #d0c2fb;
+  --color-lavender-400: #b5a3f0;
+  --color-lavender-500: #9a83dd;
+  --color-lavender-600: #7d66bd;
+
+  --color-peach-50: #fff8f4;
+  --color-peach-100: #ffefe4;
+  --color-peach-200: #ffdfc8;
+  --color-peach-300: #ffc9a4;
+  --color-peach-400: #f9ab7c;
+  --color-peach-500: #e68d59;
+
+  --color-ink: #4a3340;
+  --color-ink-soft: #7d5f6d;
+  --color-ink-muted: #9b7d8a;
+
+  /* --- Typographies --- */
+  /* Les variables --font-* sont fournies par next/font (voir src/app/layout.tsx). */
+  --font-display: var(--font-great-vibes), "Great Vibes", "Segoe Script", cursive;
+  --font-title: var(--font-playfair), "Playfair Display", "Iowan Old Style", Georgia, serif;
+  --font-sans: var(--font-quicksand), "Quicksand", "Trebuchet MS", system-ui, -apple-system, sans-serif;
+
+  /* --- Ombres douces --- */
+  --shadow-soft: 0 10px 30px -12px rgba(168, 105, 132, 0.28);
+  --shadow-card: 0 22px 55px -24px rgba(122, 76, 98, 0.4);
+  --shadow-polaroid: 0 12px 26px -14px rgba(90, 62, 74, 0.45);
+  --shadow-glow: 0 0 0 1px rgba(255, 255, 255, 0.6), 0 18px 45px -18px rgba(233, 127, 164, 0.55);
+
+  /* --- Animations --- */
+  --animate-float-slow: float 7s ease-in-out infinite;
+  --animate-float-mid: float 5.2s ease-in-out infinite;
+  --animate-twinkle: twinkle 2.8s ease-in-out infinite;
+  --animate-shimmer: shimmer 3.2s linear infinite;
+}
+
+/* ------------------------------------------------------------------------------------
+   Base
+   ------------------------------------------------------------------------------------ */
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+    /* Réserve la place de la barre de défilement : évite un décalage de mise en page
+       lorsqu'on passe d'un écran court à un écran long. */
+    scrollbar-gutter: stable;
+  }
+
+  body {
+    margin: 0;
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.7;
+    /* Dégradé pastel de fond, fixe, sans image lourde. */
+    background-color: #fff7f9;
+    background-image:
+      radial-gradient(58rem 34rem at 8% -6%, rgba(255, 214, 228, 0.85), transparent 62%),
+      radial-gradient(46rem 30rem at 100% 2%, rgba(241, 235, 255, 0.9), transparent 60%),
+      radial-gradient(52rem 34rem at 50% 108%, rgba(255, 239, 228, 0.9), transparent 62%),
+      linear-gradient(180deg, #fffdfb 0%, #fff6fa 45%, #fdf7ff 100%);
+    background-attachment: fixed;
+    /* Aucun débordement horizontal involontaire, même avec les éléments décoratifs. */
+    overflow-x: hidden;
+    min-height: 100dvh;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-title);
+    color: var(--color-ink);
+    /* 1.32 : un peu d'air au-dessus des lettres, indispensable lorsque le titre
+       se termine par un émoji (qui monte plus haut que les lettres). */
+    line-height: 1.32;
+    text-wrap: balance;
+    margin: 0;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Contraste net sur les éléments interactifs. */
+  button,
+  a {
+    font: inherit;
+    color: inherit;
+  }
+
+  /* Anneau de focus visible au clavier, invisible à la souris. */
+  :focus-visible {
+    outline: 3px solid var(--color-lavender-500);
+    outline-offset: 3px;
+    border-radius: 999px;
+  }
+
+  /* Sélection de texte assortie à la palette. */
+  ::selection {
+    background: var(--color-rose-200);
+    color: var(--color-rose-900);
+  }
+}
+
+/* ------------------------------------------------------------------------------------
+   Utilitaires personnalisés
+   ------------------------------------------------------------------------------------ */
+@utility card-pastel {
+  border-radius: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  background: linear-gradient(155deg, rgba(255, 255, 255, 0.94), rgba(255, 248, 236, 0.9));
+  box-shadow: var(--shadow-card);
+  backdrop-filter: blur(10px);
+}
+
+@utility text-shadow-soft {
+  text-shadow:
+    0 1px 14px rgba(255, 255, 255, 0.85),
+    0 1px 2px rgba(94, 32, 57, 0.08);
+}
+
+/* Masque les barres de défilement des petits carrousels. */
+@utility no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ------------------------------------------------------------------------------------
+   Animations (toutes légères : uniquement transform / opacité)
+   ------------------------------------------------------------------------------------ */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -10px, 0);
+  }
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: scale(0.86);
+  }
+  50% {
+    opacity: 0.95;
+    transform: scale(1.08);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -160% 0;
+  }
+  100% {
+    background-position: 260% 0;
+  }
+}
+
+/* Le couvercle du cadeau s'envole : valeurs en pixels (unités du dessin SVG). */
+@keyframes lid-open {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  30% {
+    transform: translate3d(-4px, -10px, 0) rotate(-3deg);
+  }
+  100% {
+    /* Le couvercle s'élève dans la « scène » réservée par le composant BoiteCadeau :
+       il ne peut donc jamais recouvrir le titre. */
+    transform: translate3d(-22px, -66px, 0) rotate(-16deg);
+  }
+}
+
+@keyframes box-shake {
+  0%,
+  100% {
+    transform: rotate(0deg) translateY(0);
+  }
+  20% {
+    transform: rotate(-3deg) translateY(-2px);
+  }
+  45% {
+    transform: rotate(3deg) translateY(-3px);
+  }
+  70% {
+    transform: rotate(-2deg) translateY(-1px);
+  }
+}
+
+@keyframes pop-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.6) translateY(10px);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.06) translateY(-2px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes rise {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0) scale(0.9);
+  }
+  25% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(var(--drift, 12px), -110px, 0) scale(1.15);
+  }
+}
+
+@utility animate-fade-in {
+  animation: fade-in 0.55s ease-out both;
+}
+
+@utility animate-fade-up {
+  animation: fade-up 0.7s cubic-bezier(0.22, 0.85, 0.28, 1) both;
+}
+
+@utility animate-scale-in {
+  animation: scale-in 0.5s cubic-bezier(0.22, 0.85, 0.28, 1) both;
+}
+
+@utility animate-pop-in {
+  animation: pop-in 0.7s cubic-bezier(0.22, 0.85, 0.28, 1) both;
+}
+
+@utility animate-lid-open {
+  animation: lid-open 1.35s cubic-bezier(0.34, 0.9, 0.3, 1) both;
+}
+
+@utility animate-box-shake {
+  animation: box-shake 1.4s ease-in-out infinite;
+}
+
+@utility animate-rise {
+  animation: rise 1.9s ease-out both;
+}
+
+/* Transformations SVG centrées sur l'élément (nécessaire pour l'animation du couvercle). */
+@utility svg-transform-centre {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+/* Délais utilitaires (petits décalages d'apparition). */
+@utility delay-1 {
+  animation-delay: 90ms;
+}
+@utility delay-2 {
+  animation-delay: 180ms;
+}
+@utility delay-3 {
+  animation-delay: 300ms;
+}
+@utility delay-4 {
+  animation-delay: 430ms;
+}
+@utility delay-5 {
+  animation-delay: 560ms;
+}
+
+/* ------------------------------------------------------------------------------------
+   Accessibilité : respect de la préférence « animations réduites ».
+   Le contenu reste intégralement visible et utilisable, sans mouvement.
+   ------------------------------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  [data-anim] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* Impression : on garde un rendu propre si quelqu'un imprime la page. */
+@media print {
+  body {
+    background: #fff;
+  }
+}
